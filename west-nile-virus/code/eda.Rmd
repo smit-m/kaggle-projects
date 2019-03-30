@@ -1,21 +1,41 @@
 ---
 title: "Preliminary EDA"
 output:
-  html_document: default
-  html_notebook: default
+  html_document:
+    code_folding: hide
 ---
 
 Predicting the West Nile Virus
 
 ```{r, warning=FALSE}
+
+```
+
+```{r, warning=FALSE, message=FALSE}
 #loading the required libraries
 library(ggplot2)
 library(ggmap)
+library(dplyr)
 ```
 
-```{r}
+```{r, warning=FALSE}
 #setting the correct working directory
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 ```
 
+```{r, warning=FALSE}
+#importing data
+# train <- read.csv("train.csv")
+# test <- read.csv("test.csv")
+# spray <- read.csv("spray.csv")
+# weather <- read.csv("weather.csv")
+# mapdata <- readRDS("mapdata_copyright_openstreetmap_contributors.rds")
+```
 
+
+
+```{r, warning=FALSE}
+
+#g <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train, col = "red")
+```
+Hello
