@@ -1,8 +1,7 @@
 ---
 title: "Preliminary EDA"
 output:
-  html_document:
-    code_folding: hide
+  html_document: default
 ---
 
 Predicting the West Nile Virus
@@ -18,24 +17,20 @@ library(ggmap)
 library(dplyr)
 ```
 
-```{r, warning=FALSE}
-#setting the correct working directory
-setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
-```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, echo=FALSE}
 #importing data
-# train <- read.csv("train.csv")
-# test <- read.csv("test.csv")
-# spray <- read.csv("spray.csv")
-# weather <- read.csv("weather.csv")
-# mapdata <- readRDS("mapdata_copyright_openstreetmap_contributors.rds")
+train <- read.csv("../data/train.csv")
+test <- read.csv("../data/test.csv")
+spray <- read.csv("../data/spray.csv")
+weather <- read.csv("../data/weather.csv")
+mapdata <- readRDS("../data/mapdata_copyright_openstreetmap_contributors.rds")
 ```
 
-
+jerfbelkvn;wrlkgnerklbvwrf
 
 ```{r, warning=FALSE}
-
-#g <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train, col = "red")
+g <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train, col = "red")
+g
 ```
-Hello
+
