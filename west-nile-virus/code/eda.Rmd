@@ -1,0 +1,21 @@
+---
+title: "Preliminary EDA"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Predicting the West Nile Virus
+
+```{r, warning=FALSE}
+#loading the required libraries
+library(ggplot2)
+library(ggmap)
+```
+
+```{r}
+#setting the correct working directory
+setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
+```
+
+
