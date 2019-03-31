@@ -27,7 +27,7 @@ weather <- read.csv("../data/weather.csv")
 mapdata <- readRDS("../data/mapdata_copyright_openstreetmap_contributors.rds")
 ```
 
-jerfbelkvn;wrlkgnerklbvwrf
+
 
 ```{r, warning=FALSE}
 g <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train, col = "red")
