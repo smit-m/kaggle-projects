@@ -2,6 +2,7 @@
 library(ggplot2)
 library(ggmap)
 library(dplyr)
+library(splitstackshape)
 
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 
@@ -12,6 +13,8 @@ spray <- read.csv("spray.csv")
 weather <- read.csv("weather.csv")
 mapdata <- readRDS("mapdata_copyright_openstreetmap_contributors.rds")
 
+
+#weather <- cSplit(weather, "CodeSum", sep = " ", type.convert = F)
 
 
 
