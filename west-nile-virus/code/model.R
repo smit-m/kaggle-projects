@@ -21,8 +21,13 @@ a <- train %>% group_by(Block,Trap, Latitude, Longitude, Date, Species) %>% summ
 
 
 
+# Logistic Regression
 
+#Random Forest
 
+#SMOTE and then regression
+
+#SMOTE and then boosting(try bagging as well)
 
 
 
