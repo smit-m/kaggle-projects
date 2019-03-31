@@ -14,12 +14,8 @@ weather <- read.csv("weather.csv")
 mapdata <- readRDS("mapdata_copyright_openstreetmap_contributors.rds")
 
 
-#weather <- cSplit(weather, "CodeSum", sep = " ", type.convert = F)
-
-
-
-a <- train %>% group_by(Block,Trap, Latitude, Longitude, Date, Species) %>% summarise(NumMosquitos = sum(NumMosquitos), WNV = sum(WnvPresent))
-
+#converting variables to required format
+weather$Date <- as.Date(as.character(weather$Date), format = "%Y-%m-%d")
 
 
 
