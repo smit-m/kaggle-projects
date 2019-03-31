@@ -19,6 +19,21 @@ a <- train %>% group_by(Block,Trap, Latitude, Longitude, Date, Species) %>% summ
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+##############
+
+
 dist_geo <- function(lat_a, lon_a, lat_b, lon_b) { 
   if(anyNA(c(lat_a, lon_a, lat_b, lon_b))) 
     return(NA) 
