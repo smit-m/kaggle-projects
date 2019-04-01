@@ -34,7 +34,6 @@ weatherdata <- weather %>% group_by(Date) %>% summarise(AvgTemp = mean(Tmax, na.
 training <- merge(train, weatherdata, by = "Date", all.x = TRUE)
 testing <- merge(test, weatherdata, by = "Date", all.x = TRUE)
 
-#training$WnvPresent <- as.factor(training$WnvPresent)
 
 
 t_Species<-c(as.character(training$Species),as.character(testing$Species))
@@ -47,24 +46,41 @@ testing <- as.data.table(testing)[,Species2:=factor(t_Species[(nrow(training)+1)
 
 
 training$Month <- as.factor(month(training$Date))
+testing$Month <- as.factor(month(testing$Date))
 
 
-#Naive Bayes Classification
-nb_model <- naiveBayes(WnvPresent ~ Species + Trap + AvgTemp, data = training)
-pred_nb_model <- predict(nb_model, newdata = testing)
+library(fastDummies)
+library(DMwR)
+t <- training[, c(12:15)]
 
-rf_model <- randomForest(WnvPresent ~ Species2 + AvgTemp, data = training, ntree = 200, importance = TRUE)
-pred_rf_model <- predict(rf_model, newdata = testing)
+new_t <- dummy_cols(t)
+new_training <- new_t[, c(1, 2, 5:17)]
+names(new_training)[3:9] <- c("Cu_PR", "Cu_R", "Cu_P", "Cu_S", "Cu_T", "Cu_Ta", "Cu_E")
+
+new_training$WnvPresent <- as.factor(make.names(new_training$WnvPresent))
+
+final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, perc.under = 200)
+
+
+te <- testing[, c(2, 12, 13, 14)]
+new_te <- dummy_cols(te)
+new_testing <- new_te[, c(1, 2, 5:16)]
+names(new_testing)[3:9] <- c("Cu_PR", "Cu_R", "Cu_P", "Cu_S", "Cu_T", "Cu_Ta", "Cu_E")
+new_testing$Month_5 <- as.integer(0)
 
 
 
-# Logistic Regression
+lr <- caret::train(WnvPresent ~ ., data = final_training, method = "glmnet",
+                   trControl = trainControl(method='cv',number=5, classProbs=T, summaryFunction=twoClassSummary),
+                   tuneGrid = expand.grid(alpha=0.001, lambda=seq(0.001,0.01,0.001)),
+                   metric = 'ROC')
 
-#Random Forest
 
-#SMOTE and then regression
+pred_lr_model <- predict(lr, new_testing, type = "prob")
 
-#SMOTE and then boosting(try bagging as well)
+final <- data.frame(cbind(new_testing$Id, pred_lr_model[,2]))
+colnames(final) <- c("Id","WnvPresent")
+write.csv(final, "sub2.csv", row.names=FALSE)
 
 
 
