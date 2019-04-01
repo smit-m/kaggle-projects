@@ -8,6 +8,8 @@ library(randomForest)
 library(data.table)
 library(caret)
 library(lubridate)
+library(fastDummies)
+library(DMwR)
 
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 
@@ -49,8 +51,7 @@ training$Month <- as.factor(month(training$Date))
 testing$Month <- as.factor(month(testing$Date))
 
 
-library(fastDummies)
-library(DMwR)
+
 t <- training[, c(12:15)]
 
 new_t <- dummy_cols(t)
@@ -91,11 +92,11 @@ write.csv(final, "sub2.csv", row.names=FALSE)
 
 ##############
 
-
-dist_geo <- function(lat_a, lon_a, lat_b, lon_b) { 
-  if(anyNA(c(lat_a, lon_a, lat_b, lon_b))) 
-    return(NA) 
-  round(distm(c(lon_a, lat_a), c(lon_b, lat_b), fun = distHaversine)/1000,2) 
-} 
-
-dgeo$distance_km=mapply(lat_a=dgeo$latitude, lon_a=dgeo$longitude, lat_b=dgeo$latitude_lag, lon_b=dgeo$longitude_lag, FUN = dist_geo)
+# 
+# dist_geo <- function(lat_a, lon_a, lat_b, lon_b) { 
+#   if(anyNA(c(lat_a, lon_a, lat_b, lon_b))) 
+#     return(NA) 
+#   round(distm(c(lon_a, lat_a), c(lon_b, lat_b), fun = distHaversine)/1000,2) 
+# } 
+# 
+# dgeo$distance_km=mapply(lat_a=dgeo$latitude, lon_a=dgeo$longitude, lat_b=dgeo$latitude_lag, lon_b=dgeo$longitude_lag, FUN = dist_geo)
