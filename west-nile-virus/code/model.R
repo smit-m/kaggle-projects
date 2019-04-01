@@ -2,12 +2,12 @@
 library(ggplot2)
 library(ggmap)
 library(dplyr)
-library(splitstackshape)
 library(e1071)
 library(C50)
 library(randomForest)
 library(data.table)
 library(caret)
+library(lubridate)
 
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 
@@ -31,12 +31,10 @@ test$Date <- as.Date(as.character(test$Date), format = "%Y-%m-%d")
 
 weatherdata <- weather %>% group_by(Date) %>% summarise(AvgTemp = mean(Tmax, na.rm = TRUE))
 
-
-
 training <- merge(train, weatherdata, by = "Date", all.x = TRUE)
 testing <- merge(test, weatherdata, by = "Date", all.x = TRUE)
 
-training$WnvPresent <- as.factor(training$WnvPresent)
+#training$WnvPresent <- as.factor(training$WnvPresent)
 
 
 t_Species<-c(as.character(training$Species),as.character(testing$Species))
@@ -47,6 +45,8 @@ t_Species<-factor(t_Species,levels=unique(t_Species))
 training <- as.data.table(training)[,Species2:=factor(t_Species[1:nrow(training)],levels=unique(t_Species))]
 testing <- as.data.table(testing)[,Species2:=factor(t_Species[(nrow(training)+1):length(t_Species)],levels=unique(t_Species))]
 
+
+training$Month <- as.factor(month(training$Date))
 
 
 #Naive Bayes Classification
