@@ -70,6 +70,8 @@ new_testing$Month_5 <- as.integer(0)
 #perc.over is used to increase minor samples in multiples of 100s
 #perc.under is used to decrease major samples in multiples of 100s
 #k is k-nn value
+
+
 final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, perc.under = 200)
 
 
@@ -78,8 +80,7 @@ final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, pe
 
 
 lr <- caret::train(final_training[, -"WnvPresent"], final_training$WnvPresent, method = "glmnet",
-                    trControl = trainControl(method='cv',number=5, classProbs=T, summaryFunction=twoClassSummary),
-                    tuneGrid = expand.grid(alpha=0.001, lambda=seq(0.001,0.01,0.001)),
+                    trControl = trainControl(method = 'cv',number = 5, classProbs = T, summaryFunction = twoClassSummary),
                     metric = 'ROC')
 
 
