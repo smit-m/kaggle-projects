@@ -7,6 +7,7 @@ library(e1071)
 library(C50)
 library(randomForest)
 library(data.table)
+library(caret)
 
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 
@@ -52,7 +53,7 @@ testing <- as.data.table(testing)[,Species2:=factor(t_Species[(nrow(training)+1)
 nb_model <- naiveBayes(WnvPresent ~ Species + Trap + AvgTemp, data = training)
 pred_nb_model <- predict(nb_model, newdata = testing)
 
-rf_model <- randomForest(WnvPresent ~ Species + AvgTemp, data = training, ntree = 200, importance = TRUE)
+rf_model <- randomForest(WnvPresent ~ Species2 + AvgTemp, data = training, ntree = 200, importance = TRUE)
 pred_rf_model <- predict(rf_model, newdata = testing)
 
 
