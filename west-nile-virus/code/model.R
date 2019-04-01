@@ -10,6 +10,7 @@ library(caret)
 library(lubridate)
 library(fastDummies)
 library(DMwR)
+library(gridExtra)
 
 setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
 
@@ -92,11 +93,44 @@ write.csv(final, "sub2.csv", row.names=FALSE)
 
 
 
+train_2011 <- subset(train, year(train$Date) == 2011)
+train_2011_WNVP <- subset(train_2011, WnvPresent == 1)
+
+train_2007 <- subset(train, year(train$Date) == 2007)
+train_2007_WNVP <- subset(train_2007, WnvPresent == 1)
+
+train_2009 <- subset(train, year(train$Date) == 2009)
+train_2009_WNVP <- subset(train_2009, WnvPresent == 1)
+
+train_2013 <- subset(train, year(train$Date) == 2013)
+train_2013_WNVP <- subset(train_2013, WnvPresent == 1)
 
 
 
+a <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train_2007, col = "blue", size = 2) + geom_point(aes(Longitude, Latitude), data = train_2007_WNVP, col = "red", shape = 4, size = 5) + ggtitle("2007")
+#a
+
+b <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train_2009, col = "blue", size = 2) + geom_point(aes(Longitude, Latitude), data = train_2009_WNVP, col = "red", shape = 4, size = 5) + ggtitle("2009")
+#b
+c <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train_2011, col = "blue", size = 2) + geom_point(aes(Longitude, Latitude), data = train_2011_WNVP, col = "red", shape = 4, size = 5) + ggtitle("2011")
+#c
+d <- ggmap(mapdata) + geom_point(aes(Longitude, Latitude), data = train_2013, col = "blue", size = 2) + geom_point(aes(Longitude, Latitude), data = train_2013_WNVP, col = "red", shape = 4, size = 5) + ggtitle("2013")
+#d
+
+grid.arrange(a, b, c, d, nrow = 1)
 
 
+
+g <- ggplot(train, aes(Species)) + geom_bar(aes(fill = as.factor(WnvPresent)))
+g
+
+
+p <- ggplot(training, aes(Month)) + geom_bar(aes(fill = as.factor(WnvPresent)))
+p
+
+
+q <- ggplot(training, aes(Date, AvgTemp, color = as.factor(WnvPresent), size = 3)) + geom_point()
+q
 ##############
 
 # 
