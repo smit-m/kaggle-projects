@@ -60,14 +60,20 @@ names(new_training)[3:9] <- c("Cu_PR", "Cu_R", "Cu_P", "Cu_S", "Cu_T", "Cu_Ta", 
 
 new_training$WnvPresent <- as.factor(make.names(new_training$WnvPresent))
 
-final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, perc.under = 200)
-
-
 te <- testing[, c(2, 12, 13, 14)]
 new_te <- dummy_cols(te)
 new_testing <- new_te[, c(1, 2, 5:16)]
 names(new_testing)[3:9] <- c("Cu_PR", "Cu_R", "Cu_P", "Cu_S", "Cu_T", "Cu_Ta", "Cu_E")
 new_testing$Month_5 <- as.integer(0)
+
+
+#perc.over is used to increase minor samples
+#perc.under is used to decrease major samples
+#k is k-nn value
+final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, perc.under = 200)
+
+
+
 
 
 
