@@ -77,10 +77,10 @@ final_training <- SMOTE(WnvPresent ~., new_training, perc.over = 1000, k = 3, pe
 
 
 
-lr <- caret::train(WnvPresent ~ ., data = final_training, method = "glmnet",
-                   trControl = trainControl(method='cv',number=5, classProbs=T, summaryFunction=twoClassSummary),
-                   tuneGrid = expand.grid(alpha=0.001, lambda=seq(0.001,0.01,0.001)),
-                   metric = 'ROC')
+lr <- caret::train(final_training[, -"WnvPresent"], final_training$WnvPresent, method = "glmnet",
+                    trControl = trainControl(method='cv',number=5, classProbs=T, summaryFunction=twoClassSummary),
+                    tuneGrid = expand.grid(alpha=0.001, lambda=seq(0.001,0.01,0.001)),
+                    metric = 'ROC')
 
 
 pred_lr_model <- predict(lr, new_testing, type = "prob")
