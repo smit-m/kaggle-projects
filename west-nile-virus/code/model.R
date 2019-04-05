@@ -12,7 +12,7 @@ library(fastDummies)
 library(DMwR)
 library(gridExtra)
 
-setwd("C:/Users/mehta/Documents/GitHub/kaggle-projects/west-nile-virus/data")
+
 
 #importing data
 train <- read.csv("train.csv")
